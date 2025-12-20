@@ -8,7 +8,17 @@ def transform_weather(raw_file_path: Path) -> Path:
     with open(raw_file_path, "r", encoding="utf-8") as f:
         raw_data = json.load(f)
 
+    # Validate        
+    if "daily" not in raw_data:
+        raise ValueError("Missing 'daily' in raw data")
+    
+    required_keys = ["time", "temperature_2m_max", "temperature_2m_min", "temperature_2m_mean"]
+
     daily = raw_data["daily"]
+    
+    for key in required_keys:
+        if key not in daily:
+            raise ValueError(f"Missing '{key}' in daily data")
 
     df = pd.DataFrame({
         "date": daily["time"],
