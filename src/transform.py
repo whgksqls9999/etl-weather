@@ -30,11 +30,4 @@ def transform_weather(raw_file_path: Path) -> Path:
     # 파생 컬럼
     df["temp_range"] = df["temp_max"] - df["temp_min"]
 
-    # 저장 경로
-    processed_dir = Path("data/processed")
-    processed_dir.mkdir(parents=True, exist_ok=True)
-
-    output_path = processed_dir / "weather_daily.csv"
-    df.to_csv(output_path, index=False)
-
-    return output_path
+    return df
