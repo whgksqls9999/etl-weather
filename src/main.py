@@ -1,5 +1,6 @@
 from extract.weather_extract import extract_weather
 from extract.dust_extract import extract_dust
+from load.csv_loader import load_to_csv
 from transform.dust_transform import transform_dust
 from transform.merge_transform import merge_weather_dust
 from transform.weather_transform import transform_weather
@@ -13,6 +14,8 @@ def main():
     weather_df = transform_weather(weather_raw)
     dust_df = transform_dust(dust_raw)
     merged_df = merge_weather_dust(weather_df, dust_df)
+    
+    load_to_csv(merged_df)
     
 
 if __name__ == "__main__":
