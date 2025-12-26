@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+RAW_DIR = Path("data/raw/weather")
+RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 def extract_weather():
     url = "https://api.open-meteo.com/v1/forecast"
@@ -19,14 +21,9 @@ def extract_weather():
 
     data = response.json()
 
-    # 저장 경로
-    raw_dir = Path("data/raw")
-    raw_dir.mkdir(parents=True, exist_ok=True)
-
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    file_path = raw_dir / f"weather_raw_{timestamp}.json"
-
+    file_path = RAW_DIR / "weather.json"
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+    print("[Extract] Weather data saved")
     return file_path

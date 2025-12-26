@@ -1,18 +1,12 @@
-from extract import extract_weather
-from transform import transform_weather
-from load import load_to_csv
+from extract.weather_extract import extract_weather
+from extract.dust_extract import extract_dust
 
 def main():
     print("ETL pipeline start")
-
-    raw_file = extract_weather()
-    print(f"Extract complete: {raw_file}")
-
-    df = transform_weather(raw_file)
-    print(f"Transfrom complete: {df.head()}")
     
-    processed_file = load_to_csv(df)
-    print(f"Load complete: {processed_file}")
+    weather_raw = extract_weather()
+    dust_raw = extract_dust()
+    
 
 if __name__ == "__main__":
     main()
